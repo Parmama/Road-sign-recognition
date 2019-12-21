@@ -24,3 +24,4 @@ behajtani_tilos
 veszely_jelzo
 
 Ezeken felül további 23 (összesen 42) féle forgalomirányító tábla felismerésére képes teljes adatbázisból dolgozva.
+Ezekkel az adatokkal a "limited_capacity(19_signs)" branch alatt található kód kompatibilis.
