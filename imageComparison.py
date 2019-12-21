@@ -5,41 +5,9 @@ import numpy as np
 import glob
 import os
 
-
-
-'''def similarity_check (smpImg, refImg, asd, goodCounter, a):
-		sift = cv2.xfeatures2d.SIFT_create()
-		kp1, des1 = sift.detectAndCompute(smpImg, None)
-		kp2, des2 = sift.detectAndCompute(refImg, None)
-		
-		
-		if (not np.any(des2)):
-			asd = False
-			return(asd)
-
-		index_params = dict(algorithm = 0, trees = 5)
-		search_params = dict()
-
-		flann = cv2.FlannBasedMatcher(index_params, search_params)
-
-		matches = flann.knnMatch(des1, des2, k=2)
-
-		good = []
-		for m, n in matches:
-			if m.distance < 0.6*n.distance:
-				good.append(m)
-
-		result = cv2.drawMatches(smpImg, kp1, refImg, kp2, good, None)
-		cv2.imshow("Found Matches", result)
-		a = len(good)
-		print(len(good))
-		print(a)
-		return(a)'''
-		
-
-signs = ["20km/h_korlatozo", "30hm/h_korlatozo", "50hm/h_korlatozo",
-"60hm/h_korlatozo", "70hm/h_korlatozo", "80hm/h_korlatozo", "80hm/h_korlatozo_vege",
-"100hm/h_korlatozo", "120hm/h_korlatozo", "elozni_tilos", "teherautoval_elozni_tilos",
+signs = ["20km/h_korlatozo", "30km/h_korlatozo", "50km/h_korlatozo",
+"60km/h_korlatozo", "70km/h_korlatozo", "80km/h_korlatozo", "80km/h_korlatozo_vege",
+"100km/h_korlatozo", "120km/h_korlatozo", "elozni_tilos", "teherautoval_elozni_tilos",
 "felsobbrendu_utkeresztezodes", "foutvonal", "elsobbsegadas_kotlezzo",
 "allj_elsobbsegadas_kotelezo", "behajtani_tilos", "teherautoval_behajtani_tilos",
 "behajtas_a_tuloldalrol", "veszely_jelzo", "eles_utkanyarulat_balra",
@@ -58,13 +26,9 @@ pathVariables = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
 "36", "37", "38", "39", "40", "41", "42"]
 
 #read images
-smpImg = cv2.imread('/home/parma/Documents/Gépi látás/reference/aasd/00002_00007.ppm')
+smpImg = cv2.imread('sample/00002_00007.ppm')
 smpImg = cv2.resize(smpImg, (300,300))
 cv2.imshow("Sample", smpImg)
-'''compImg = cv2.imread('/home/parma/Documents/Gépi látás/reference/00003/00036_00001.ppm')
-#create gray immages
-srcImg = cv2.cvtColor(srcImg, cv2.COLOR_BGR2GRAY)
-compImg = cv2.cvtColor(compImg, cv2.COLOR_BGR2GRAY)'''
 
 
 filec=100
@@ -81,10 +45,10 @@ while (percentage/(filec/10) < 10):
 
 
 	#Iterating in the reference folder
-	pattern = "/home/parma/Documents/Gépi látás/reference/" + pathVariables[i]+ "/*"
+	pattern = "reference/" + pathVariables[i]+ "/*"
 	
 	for fname in glob.glob(pattern):
-		print('file name :', fname)
+		print('processing...')
 		
 		refImg = cv2.imread(fname)
 		refImg = cv2.resize(refImg, (300,300))
@@ -107,19 +71,15 @@ while (percentage/(filec/10) < 10):
 			if m.distance < 0.6*n.distance:
 				good.append(m)
 
-		result = cv2.drawMatches(smpImg, kp1, refImg, kp2, good, None)
-		cv2.imshow("Found Matches", result)
 		
 		a = len(good)
 		percentage = a + percentage 
-		print("sum of good matches :", percentage)
 		
 			
 		#count the passed images
 		filec+=1
-		print("inspected image counter :", filec)
 		
-		#ends after 100 images
+		#ends after 40 images
 		if (filec == 40):
 			break
 			
@@ -129,43 +89,8 @@ while (percentage/(filec/10) < 10):
 		break	
 	i += 1
 	
-	#match ratio
-	#match ratio
-	print(percentage/(filec/10))
-	print(signs[i-1])
+#match
+print("Detected sign: ", signs[i-1])
 
-
-
-	
-	
-
-	
-'''#check for similarities
-sift = cv2.xfeatures2d.SIFT_create()
-kp1, des1 = sift.detectAndCompute(smpImg, None)
-kp2, des2 = sift.detectAndCompute(refImg, None)
-
-index_params = dict(algorithm = 0, trees = 5)
-search_params = dict()
-
-flann = cv2.FlannBasedMatcher(index_params, search_params)
-
-matches = flann.knnMatch(des1, des2, k=2)
-
-good = []
-for m, n in matches:
-	if m.distance < 0.6*n.distance:
-		good.append(m)
-
-result = cv2.drawMatches(smpImg, kp1, refImg, kp2, good, None)
-cv2.imshow("Found Matches", result)
-print(len(good))'''
-
-
-	
-
-'''cv2.imshow("Source", srcImg)
-cv2.imshow("Compared image", compImg)
-cv2.imshow("Difference", difference)'''
 cv2.waitKey(0)
 cv2.destroyAllWindows()
