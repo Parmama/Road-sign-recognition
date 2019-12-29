@@ -85,7 +85,7 @@ while (percentage/(filec/10) < 10):
 			
 
 	
-	if (i == 42):
+	if (i == 19):
 		break	
 	i += 1
 	
